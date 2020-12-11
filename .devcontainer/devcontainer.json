@@ -1,3 +1,4 @@
 {
-  "image": "mcr.microsoft.com/vscode/devcontainers/javascript-node:14"
+  "image": "mcr.microsoft.com/vscode/devcontainers/javascript-node:14",
+  "postCreateCommand": ["bash", "-c", "npm install -g pnpm"]
 }
