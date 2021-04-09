@@ -98,12 +98,15 @@ export function useReactEditor<Combined extends AnyCombinedUnion>(
     };
   }, [framework]);
 
-  const previousEditable = usePrevious(props.editable);
-
   // Handle editor updates
+  // This effect will fire every time `editable` changes, which means we need
+  // to update the framework with the new value.
   useEffect(() => {
-    framework.onUpdate(previousEditable);
-  }, [previousEditable, framework]);
+    framework.onUpdate();
+  }, [
+    props.editable, // we need editable in the dependency list even though we don't use it directly
+    framework,
+  ]);
 
   // Handle the controlled editor usage.
   useControlledEditor(framework);
