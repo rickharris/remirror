@@ -286,12 +286,13 @@ export class ReactFramework<Extension extends AnyExtension> extends Framework<
   /**
    * Called for every update of the props and state.
    */
-  onUpdate(previousEditable: boolean | undefined): void {
+  onUpdate(): void {
     // Ensure that `children` is still a render prop
     // propIsFunction(this.props.children);
 
-    // Check whether the editable prop has been updated
-    if (this.props.editable !== previousEditable && this.view && this.#editorRef) {
+    // This function is only ever called when the `editable` prop has changed,
+    // so we know we need need to set the view props.
+    if (this.view && this.#editorRef) {
       this.view.setProps({ ...this.view.props, editable: () => this.props.editable ?? true });
     }
   }

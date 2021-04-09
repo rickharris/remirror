@@ -64,12 +64,15 @@ export function useReactFramework<Extension extends AnyExtension>(
     };
   }, [framework]);
 
-  const previousEditable = usePrevious(editable);
-
   // Handle editor updates
+  // This effect will fire every time `editable` changes, which means we need
+  // to update the framework with the new value.
   useEffect(() => {
-    framework.onUpdate(previousEditable);
-  }, [previousEditable, framework]);
+    framework.onUpdate();
+  }, [
+    editable, // we need editable in the dependency list even though we don't use it directly
+    framework,
+  ]);
 
   // Handle the controlled editor usage.
   useControlledEditor(framework);
